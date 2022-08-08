@@ -1,4 +1,4 @@
-function DetailPage(props) {
+function Detail(props) {
     return (
         <div className="container">
             <div className="row">
@@ -16,4 +16,4 @@ function DetailPage(props) {
     );
 }
 
-export default DetailPage;
+export default Detail;

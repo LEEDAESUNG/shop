@@ -4,14 +4,14 @@ import './App.css';
 import 메인이미지 from './img/main-bg.jpg';
 import data from './data.js'
 import { useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import { getDefaultNormalizer } from '@testing-library/react';
-import DetailPage from "./Detail.js";
+import Detail from "./Detail.js";
 
 function App() {
 
   let [shoes] = useState(data);
-
+  let navigate = useNavigate();
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
@@ -23,7 +23,8 @@ function App() {
             <Nav.Link href="#pricing">Pricing</Nav.Link> */}
 
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/detail">Detail</Nav.Link>
+            {/* <Nav.Link href="/detail">Detail</Nav.Link> */}
+            <Nav.Link onClick={() => { navigate('/detail') }}> Detail </Nav.Link>
             <Nav.Link href="/about">About</Nav.Link>
 
             {/* //페이지 이동 버튼 */}
@@ -36,11 +37,25 @@ function App() {
 
       <div className="main-bg" style={{ backgroundImage: 'URL(' + 메인이미지 + ')' }} /> {/*src/img 이미지파일*/}
 
-
           <Routes>
-            <Route path="/" element={ Home(shoes={shoes}) } />
-            <Route path="/detail" element={ <DetailPage shoes={shoes} /> } />
-            <Route path="/about" element={ <AboutPage /> } />
+            <Route path="/" element={<div className="container"> <div className="row"> <Home shoes={shoes} /> </div></div> } />
+            <Route path="/detail" element={ <Detail shoes={shoes} /> } />
+            
+            {/* <Route path="/about" element={ <AboutPage /> } />
+            <Route path="/about/member" element={<AboutPage />} />
+            <Route path="/about/location" element={<AboutPage />} /> */}
+
+            <Route path="/about" element={<AboutPage />} > {/* Nested Routes라고 함 */}
+              <Route path="member" element={<div> 멤버임</div>} /> {/* /about/member와 동일, AboutPage출력및 AboutPage내의 outlet부분에 출력 */}
+              <Route path="location" element={<div> 로케이션임</div>} /> {/* /about/location 동일, AboutPage출력및 AboutPage내의 outlet부분에 출력 */}
+            </Route>
+
+            <Route path="/event" element={<EventPage />} > {/* Nested Routes라고 함 */}
+              <Route path="one" element={<div> 첫 주문시 양배추즙 서비스</div>} />
+              <Route path="two" element={<div> 생일기념 쿠폰받기</div>} />
+            </Route>
+            
+            <Route path="*" element={<div>없는 페이지(404)</div>} />
           </Routes>
 
 
@@ -95,19 +110,16 @@ function Home(props) {
 
   return (
 
-    <div className="container">
-      <div className="row"> 
-    props.shoes.map(function (a, i) {
-          return (
-            <div className="col-md-4" key={i}>
-              <Card shoes={props.shoes[i]} />
-            </div>
-          )
-        })
-        
-      </div></div>
 
-      
+        props.shoes.map(function (a, i) {
+              return (
+                <div className="col-md-4" key={i}>
+                  <Card shoes={props.shoes[i]} />
+                </div>
+              )
+            })
+            
+    
   );
 
     
@@ -128,8 +140,18 @@ function AboutPage() {
   return (
     <div>
       어바웃페이지
+      <Outlet></Outlet>
     </div>
   );
+}
+
+function EventPage() {
+  return (
+    <div>
+      <h4>오늘의 이벤트</h4>
+      <Outlet></Outlet>
+    </div>
+  )
 }
 
 export default App;
