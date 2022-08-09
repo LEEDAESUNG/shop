@@ -39,7 +39,8 @@ function App() {
 
           <Routes>
             <Route path="/" element={<div className="container"> <div className="row"> <Home shoes={shoes} /> </div></div> } />
-            <Route path="/detail" element={ <Detail shoes={shoes} /> } />
+            {/* <Route path="/detail" element={ <Detail shoes={shoes} /> } /> */}
+            <Route path="/detail/:id/:id2" element={<Detail shoes={shoes} />} /> {/* :id ==> 파라미터 */}
             
             {/* <Route path="/about" element={ <AboutPage /> } />
             <Route path="/about/member" element={<AboutPage />} />
