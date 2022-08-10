@@ -10,8 +10,9 @@ import Detail from "./Detail.js";
 
 function App() {
 
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
+
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
@@ -37,10 +38,25 @@ function App() {
 
       <div className="main-bg" style={{ backgroundImage: 'URL(' + 메인이미지 + ')' }} /> {/*src/img 이미지파일*/}
 
+      <button onClick={() => {
+        
+        let copy = [...shoes];
+        // console.log("before sort: ");
+        // console.log(shoes);
+        //copy.sort(); 
+        const comparator = (a, b) => a.title.localeCompare(b.title);
+        copy = copy.sort(comparator)
+        setShoes(copy);
+        // console.log("after sort: ");
+        // console.log(copy.sort(comparator));
+      }} > 상품명 정렬</button>
+
           <Routes>
             <Route path="/" element={<div className="container"> <div className="row"> <Home shoes={shoes} /> </div></div> } />
             {/* <Route path="/detail" element={ <Detail shoes={shoes} /> } /> */}
-            <Route path="/detail/:id/:id2" element={<Detail shoes={shoes} />} /> {/* :id ==> 파라미터 */}
+            {/* <Route path="/detail/:id/:id2" element={<Detail shoes={shoes} />} /> */}
+            {/* <Route path="/detail/:id/test/:id2" element={<Detail shoes={shoes} />} /> */}
+            <Route path="/detail/:id" element={<Detail shoes={shoes} />} /> {/* :id ==> 파라미터 */}
             
             {/* <Route path="/about" element={ <AboutPage /> } />
             <Route path="/about/member" element={<AboutPage />} />
