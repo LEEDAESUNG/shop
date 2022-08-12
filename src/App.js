@@ -5,7 +5,7 @@ import 메인이미지 from './img/main-bg.jpg';
 import data from './data.js'
 import { useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import { getDefaultNormalizer } from '@testing-library/react';
+//import { getDefaultNormalizer } from '@testing-library/react';
 import Detail from "./Detail.js";
 
 function App() {

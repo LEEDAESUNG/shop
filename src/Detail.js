@@ -1,4 +1,25 @@
 import { useParams } from "react-router-dom";
+import styled from 'styled-components';
+
+
+
+// let YellowSimpleBtn = styled.button`
+//     background : grey;
+//     color : yellow
+// `
+// let YellowBtn = styled.button `
+//     background : ${ props => props.bg };
+//     color : ${ props => props.bg == 'skyblue' ? 'red' : 'black' };
+//     padding : 10px;
+// `
+//  let NewBtn = styled.button(YellowBtn) `
+//      border: 2px solid black;
+//  `
+// let Box = styled.div `
+//     background : grey;
+//     padding : 20px;
+// `
+
 
 function Detail(props) {
     
@@ -7,6 +28,14 @@ function Detail(props) {
     
     return (
         <div className="container">
+
+            {/* <Box>
+                <YellowSimpleBtn>버튼</YellowSimpleBtn>
+                <YellowBtn bg="skyblue">버튼</YellowBtn>
+                <YellowBtn bg="orange">버튼</YellowBtn>
+                <NewBtn>버튼</NewBtn>
+            </Box>*/}
+
             <div className="row">
                 <div className="col-md-6">
                     <img src={"https://codingapple1.github.io/shop/shoes" + (Number(id) + 1) + ".jpg" } width="100%" />
