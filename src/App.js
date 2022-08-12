@@ -72,11 +72,11 @@ function App() {
               <Route path="two" element={<div> 생일기념 쿠폰받기</div>} />
             </Route>
             
-            <Route path="*" element={<div>없는 페이지(404)</div>} />
+            <Route path="*" element={<div>없는 페이지(404)</div>} /> {/* 그 외 모든 라우트 */}
           </Routes>
 
 
-
+`
       {/* <div className="main-bg" style={{ backgroundImage: 'URL(' + 메인이미지 + ')' }} /> {/*src/img 이미지파일*/}
 
       {/*<div className="container">
@@ -144,9 +144,11 @@ function Home(props) {
 function Card(props) {
   return (
     <>
-      <img src={props.shoes.url} width="80%" />
-      <h4> {props.shoes.title} </h4>
-      <p> {props.shoes.price} </p>
+      <Link to={"/detail/" + (Number(props.shoes.id)) }>
+        <img src={props.shoes.url} width="80%" />
+        <h4> {props.shoes.title} </h4>
+        <p> {props.shoes.price} </p>
+      </Link>
     </>
   );
 }
