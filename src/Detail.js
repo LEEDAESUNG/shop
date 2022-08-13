@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styled from 'styled-components';
+//import styled from 'styled-components';
 
 
 
@@ -24,10 +25,54 @@ import styled from 'styled-components';
 function Detail(props) {
     
     let {id} = useParams();
-    //console.log(id);
+
+    //HTML 랜더링 이후 실행
+    //이용시점: 
+    //1.시간이 오래걸리는 연산, 2.서버에서 데이터 수신하는 경우,
+    //3.타이머처리 등..
+    
+    // 마운트, 업데이트 될때마다, HTML 랜더링 이후 실행.
+    useEffect(()=>{
+        let timer = setTimeout(() => { setPurchageDCShow(false); }, 2000); //1000ms 후 코드실행
+        console.log("useEffect")
+        //클린업 함수라고 함
+        //useEffect동작전 실행,
+        //마운트때는 동작안함, 언마운트때 동작함 
+        //예를들어 이 useEffect는 업데이트될때마다 타이머가 계속 생성되는 문제발생에 대하여 
+        //클린업 함수를 이용해서 해결할 수있다.
+        return () => {
+            clearTimeout(timer); //기존 타이머 제거
+            console.log("clean up function")
+        }
+    }); 
+
+    // 마운트, count 값이 업데이트 될때마다 실행, 
+    // let [Count, setCount] = useState(0);
+    // useEffect(() => {
+    //     console.log("useEffect 실행");
+    //     setTimeout(() => { setPurchageDCShow(false);}, 2000); //타이머 2000ms 후 코드실행
+    // }, [Count]); 
+
+    // 마운트때만 실행됨, 업데이트 될때는 실행안됨
+    // useEffect(() => {
+    //     let timerName = setTimeout(() => { setPurchageDCShow(false); }, 2000); //1000ms 후 코드실행
+    // }, []);
+
+
+    let [purchageDCShow, setPurchageDCShow] = useState(true);
+    
     
     return (
         <div className="container">
+
+                
+                { purchageDCShow == true ? 
+                    <div className="alert alert-warning">
+                        2초이내 구매시 할인
+                    </div>
+                  : null
+                }
+            
 
             {/* <Box>
                 <YellowSimpleBtn>버튼</YellowSimpleBtn>
