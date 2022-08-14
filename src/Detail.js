@@ -58,10 +58,30 @@ function Detail(props) {
     //     let timerName = setTimeout(() => { setPurchageDCShow(false); }, 2000); //1000ms 후 코드실행
     // }, []);
 
-
+    let [message, setMessage] = useState("");
+    useEffect(()=>{
+        let msgTimer = setTimeout(()=> { setMessage("");}, 2000)
+        return () => {
+            clearTimeout(msgTimer);
+            console.log("clean up function:msgTimer");
+        }
+    }, [message]);
     let [purchageDCShow, setPurchageDCShow] = useState(true);
+    let [money, setMoney] = useState("");
     
-    
+
+    // const onChangeMoney = (e) => {
+    //     let num = e.target.value.replace(/[^0-9]/g, "")
+    //     setMoney(num);
+    // };
+
+    function onChangeMoney(e){
+        let num = e.target.value.replace(/[^0-9]/g, "") //숫자만
+        setMoney(num);
+        if (e.target.value.length != num.length) {
+            setMessage("숫자만 입력하세요")
+        }
+    }
     return (
         <div className="container">
 
@@ -82,6 +102,8 @@ function Detail(props) {
             </Box>*/}
 
             <div className="row">
+                <div> {message} </div>
+                <input onChange={ onChangeMoney } value = {money} maxLength="20" ></input>
                 <div className="col-md-6">
                     <img src={"https://codingapple1.github.io/shop/shoes" + (Number(id) + 1) + ".jpg" } width="100%" />
                 </div>

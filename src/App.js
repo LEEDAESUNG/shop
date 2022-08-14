@@ -7,11 +7,13 @@ import { useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 //import { getDefaultNormalizer } from '@testing-library/react';
 import Detail from "./Detail.js";
+import axios from 'axios'
 
 function App() {
 
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
+  let dataURL = 'https://codingapple1.github.io/shop/data2.json';
 
   return (
     <div className="App">
@@ -39,15 +41,12 @@ function App() {
       <div className="main-bg" style={{ backgroundImage: 'URL(' + 메인이미지 + ')' }} /> {/*src/img 이미지파일*/}
 
       <button onClick={() => {
-        
         let copy = [...shoes];
-        // console.log("before sort: ");
         // console.log(shoes);
-        //copy.sort(); 
         const comparator = (a, b) => a.title.localeCompare(b.title);
+        //copy.sort(); 
         copy = copy.sort(comparator)
         setShoes(copy);
-        // console.log("after sort: ");
         // console.log(copy.sort(comparator));
       }} > 상품명 정렬</button>
 
@@ -76,7 +75,7 @@ function App() {
           </Routes>
 
 
-`
+
       {/* <div className="main-bg" style={{ backgroundImage: 'URL(' + 메인이미지 + ')' }} /> {/*src/img 이미지파일*/}
 
       {/*<div className="container">
@@ -103,7 +102,6 @@ function App() {
             <p> {shoes[2].price} </p>
           </div> */}
 
-
           {/* {
             shoes.map(function (a, i) {
               return (
@@ -114,38 +112,44 @@ function App() {
             })
           } */}
 
-
       {/*  </div>
       </div>*/}
 
+      < button onClick={() => {
+        axios.get(dataURL)
+          .then((결과)=>{
+            console.log(결과.data)
+            let copy = [...shoes]
+            copy.push(...결과.data)
+            setShoes(copy)
+          })
+          .catch(()=>{
+            console.log("실패함")
+          })
+      }}> 버튼</button >
     </div>
   );
 }
 
 function Home(props) {
-  
-
   return (
-
-
-        props.shoes.map(function (a, i) {
-              return (
-                <div className="col-md-4" key={i}>
-                  <Card shoes={props.shoes[i]} />
-                </div>
-              )
-            })
-            
-    
+    props.shoes.map(function (a, i) {
+      return (
+        <>
+          <div className="col-md-4" key={i}>
+            <Card shoes={props.shoes[i]} />
+          </div>
+        </>
+      )
+    })
   );
-
-    
 }
 function Card(props) {
   return (
     <>
       <Link to={"/detail/" + (Number(props.shoes.id)) }>
-        <img src={props.shoes.url} width="80%" />
+        {/* <img src={props.shoes.url} width="80%" /> */}
+        <img src={"https://codingapple1.github.io/shop/shoes" + (Number(props.shoes.id) + 1) + ".jpg"} width="80%" />
         <h4> {props.shoes.title} </h4>
         <p> {props.shoes.price} </p>
       </Link>
