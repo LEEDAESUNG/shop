@@ -13,7 +13,9 @@ function App() {
 
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
-  let dataURL = 'https://codingapple1.github.io/shop/data2.json';
+  let [dataURL, setDataURL] = useState("https://codingapple1.github.io/shop/data2.json");
+  let [moreCount, setMoreCount] = useState(0); //더보기버튼 횟수
+  let maxMoreCount = 2;
 
   return (
     <div className="App">
@@ -115,18 +117,53 @@ function App() {
       {/*  </div>
       </div>*/}
 
-      < button onClick={() => {
-        axios.get(dataURL)
-          .then((결과)=>{
-            console.log(결과.data)
-            let copy = [...shoes]
-            copy.push(...결과.data)
-            setShoes(copy)
-          })
-          .catch(()=>{
-            console.log("실패함")
-          })
-      }}> 버튼</button >
+      {
+        (moreCount < maxMoreCount) ?
+              < button onClick={() => {
+                moreCount++;
+                setMoreCount(moreCount);
+                if(moreCount == 1){
+                  dataURL = 'https://codingapple1.github.io/shop/data2.json';
+                }
+                else if (moreCount == 2) {
+                  dataURL = 'https://codingapple1.github.io/shop/data3.json';
+                }
+                else{
+                  dataURL="";
+                  console.log("더보기 없음")
+                }
+                setDataURL(dataURL);
+
+                if(dataURL.length>0) {
+                  axios.get(dataURL)
+                    .then((결과)=>{
+                      // let copy = [...shoes]
+                      // copy.push(...결과.data)
+                      let copy = [...shoes, ...결과.data]
+                      setShoes(copy)
+                    })
+                    .catch(()=>{
+                      console.log("실패함")
+                    })
+
+
+                  /* axios.post('https://url1', {name:'kim'}) //json형식으로 데이터 전송하는 방법 */
+
+                  /* Promise.all(() => { [axios.get('https://url1'), axios.get('https://url2')]
+                    .then(()=>{ console.log("여러 url 데이터 가져오기 모두 성공할때") })
+                      })
+                    .catch(() => {
+                     console.log("여러 url 데이터 가져오기 하나라도 실패할때")
+                      }) */
+
+                  /* fetch('https://url1')
+                  .then(결과=>결과.json()) //json형태 수신데이터를 array/oject로 변환
+                  .then(data=>{}) */
+                }
+              }}> {(moreCount < maxMoreCount) ? "더보기" : "더보기없음"} </button >
+        : null
+      }
+
     </div>
   );
 }
