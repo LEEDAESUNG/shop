@@ -16,6 +16,7 @@ function App() {
   let [dataURL, setDataURL] = useState("https://codingapple1.github.io/shop/data2.json");
   let [moreCount, setMoreCount] = useState(0); //더보기버튼 횟수
   let maxMoreCount = 2;
+  let [loading, setLoading] = useState(false);
 
   return (
     <div className="App">
@@ -120,6 +121,9 @@ function App() {
       {
         (moreCount < maxMoreCount) ?
               < button onClick={() => {
+
+                setLoading(true);//로딩중 메세지...
+
                 moreCount++;
                 setMoreCount(moreCount);
                 if(moreCount == 1){
@@ -141,9 +145,11 @@ function App() {
                       // copy.push(...결과.data)
                       let copy = [...shoes, ...결과.data]
                       setShoes(copy)
+                      setLoading(false);//로딩중 메세지 제거
                     })
                     .catch(()=>{
                       console.log("실패함")
+                      setLoading(false);//로딩중 메세지 제거
                     })
 
 
@@ -162,6 +168,10 @@ function App() {
                 }
               }}> {(moreCount < maxMoreCount) ? "더보기" : "더보기없음"} </button >
         : null
+      }
+
+      {
+        loading==true ? < div > 로딩중입니다</div> : null
       }
 
     </div>

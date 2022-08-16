@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 //import styled from 'styled-components';
-import { Nav } from "react-bootstrap";
+import { Nav, Tab } from "react-bootstrap";
 
 
 // let YellowSimpleBtn = styled.button`
@@ -68,7 +68,7 @@ function Detail(props) {
     }, [message]);
     let [purchageDCShow, setPurchageDCShow] = useState(true);
     let [money, setMoney] = useState("");
-    
+    let [탭, 탭변경] = useState(0);
 
     // const onChangeMoney = (e) => {
     //     let num = e.target.value.replace(/[^0-9]/g, "")
@@ -119,8 +119,47 @@ function Detail(props) {
                     <button className="btn btn-danger">주문하기</button>
                 </div>
             </div>
+
+            <Nav fill variant="tabs" defaultActiveKey="link0">
+                <Nav.Item>
+                    <Nav.Link eventKey="link0" onClick={() => {탭변경(0)}}>내용1</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="link1" onClick={() => { 탭변경(1) }}>내용2</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="link2" onClick={() => { 탭변경(2) }}>내용3</Nav.Link>
+                </Nav.Item>
+            </Nav>
+            
+            {/* {
+                탭 == 0 ? <div>내용1</div> : null
+            }
+            {
+                탭 == 1 ? <div>내용2</div> : null
+            }
+            {
+                탭 == 2 ? <div>내용3</div> : null
+            } */}
+
+            <TabContent 탭={탭} />
         </div>
     );
+}
+
+// function TabContent(props) {
+//     if (props.탭 == 0) return <div>내용1</div>
+//     if (props.탭 == 1) return <div>내용2</div>
+//     if (props.탭 == 2) return <div>내용3</div>
+//
+//    return [<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][props.탭]
+// }
+function TabContent({탭}) {
+    // if (탭 == 0) return <div>내용1</div>
+    // if (탭 == 1) return <div>내용2</div>
+    // if (탭 == 2) return <div>내용3</div>
+
+    return [<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][탭]
 }
 
 export default Detail;
