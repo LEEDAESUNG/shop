@@ -33,8 +33,9 @@ function Detail(props) {
     
     // 마운트, 업데이트 될때마다, HTML 랜더링 이후 실행.
     useEffect(()=>{
+        //2초 이내 구매시 할인
         let timer = setTimeout(() => { setPurchageDCShow(false); }, 2000); //1000ms 후 코드실행
-        console.log("useEffect")
+        console.log("useEffect run[timer]")
         //클린업 함수라고 함
         //useEffect동작전 실행,
         //마운트때는 동작안함, 언마운트때 동작함 
@@ -42,9 +43,9 @@ function Detail(props) {
         //클린업 함수를 이용해서 해결할 수있다.
         return () => {
             clearTimeout(timer); //기존 타이머 제거
-            console.log("clean up function")
+            console.log("useEffect clean up[timer]")
         }
-    }); 
+    },[]); 
 
     // 마운트, count 값이 업데이트 될때마다 실행, 
     // let [Count, setCount] = useState(0);
@@ -61,9 +62,11 @@ function Detail(props) {
     let [message, setMessage] = useState("");
     useEffect(()=>{
         let msgTimer = setTimeout(()=> { setMessage("");}, 2000)
+        console.log("useEffect run[msgTimer]")
         return () => {
             clearTimeout(msgTimer);
-            console.log("clean up function:msgTimer");
+            //console.log("clean up function:msgTimer");
+            console.log("useEffect clean up[msgTimer]")
         }
     }, [message]);
     let [purchageDCShow, setPurchageDCShow] = useState(true);
@@ -85,13 +88,13 @@ function Detail(props) {
     return (
         <div className="container">
 
-                
-                { purchageDCShow == true ? 
-                    <div className="alert alert-warning">
-                        2초이내 구매시 할인
-                    </div>
-                  : null
-                }
+            
+            { purchageDCShow == true ? 
+                <div className="alert alert-warning">
+                    2초이내 구매시 할인
+                </div>
+                : null
+            }
             
 
             {/* <Box>
@@ -154,12 +157,28 @@ function Detail(props) {
 //
 //    return [<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][props.탭]
 // }
-function TabContent({탭}) {
-    // if (탭 == 0) return <div>내용1</div>
-    // if (탭 == 1) return <div>내용2</div>
-    // if (탭 == 2) return <div>내용3</div>
 
-    return [<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][탭]
+// function TabContent({탭}) {
+//     if (탭 == 0) return <div>내용1</div>
+//     if (탭 == 1) return <div>내용2</div>
+//     if (탭 == 2) return <div>내용3</div>
+// }
+
+function TabContent({ 탭 }) {
+    let [fade, setFade] = useState('');
+    useEffect(() => {
+        let timerFadein = setTimeout(() => { setFade('end'); }, 100); //타이머 100ms 후 setFade('end')실행
+        return () => {
+            clearTimeout(timerFadein);
+            setFade('');
+        }
+    }, [탭]);
+
+    return (
+        <div className={'start ' + fade}>
+            {[<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][탭]}
+        </div>
+    )
 }
 
 export default Detail;
