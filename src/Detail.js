@@ -21,7 +21,6 @@ import { Nav, Tab } from "react-bootstrap";
 //     padding : 20px;
 // `
 
-
 function Detail(props) {
     
     let {id} = useParams();
@@ -46,6 +45,14 @@ function Detail(props) {
             console.log("useEffect clean up[timer]")
         }
     },[]); 
+
+
+    //이미지
+    let [imageShoes, setImageShoes] = useState('');
+    useEffect(()=>{
+        let imgTimer = setTimeout(() => { setImageShoes('end'); }, 100);
+        return ()=>{clearTimeout(imgTimer);}
+    });
 
     // 마운트, count 값이 업데이트 될때마다 실행, 
     // let [Count, setCount] = useState(0);
@@ -108,7 +115,12 @@ function Detail(props) {
                 <div> {message} </div>
                 <input onChange={ onChangeMoney } value = {money} maxLength="20" ></input>
                 <div className="col-md-6">
-                    <img src={"https://codingapple1.github.io/shop/shoes" + (Number(id) + 1) + ".jpg" } width="100%" />
+
+                    {/* <img src={"https://codingapple1.github.io/shop/shoes" + (Number(id) + 1) + ".jpg" } width="100%" /> */}
+                    <div className={'start ' + imageShoes}> {/*fade in 효과 */}
+                        <img src={"https://codingapple1.github.io/shop/shoes" + (Number(id) + 1) + ".jpg"} width="100%" />
+                    </div>
+                    
                 </div>
                 <div className="col-md-6">
                     {/* <h4 className="pt-5">props.shoes[0].title</h4>
@@ -145,7 +157,7 @@ function Detail(props) {
                 탭 == 2 ? <div>내용3</div> : null
             } */}
 
-            <TabContent 탭={탭} />
+            <TabContent shoes={props.shoes} id={id} 탭={탭} />
         </div>
     );
 }
@@ -164,7 +176,7 @@ function Detail(props) {
 //     if (탭 == 2) return <div>내용3</div>
 // }
 
-function TabContent({ 탭 }) {
+function TabContent({ shoes, id, 탭 }) {
     let [fade, setFade] = useState('');
     useEffect(() => {
         let timerFadein = setTimeout(() => { setFade('end'); }, 100); //타이머 100ms 후 setFade('end')실행
@@ -175,8 +187,8 @@ function TabContent({ 탭 }) {
     }, [탭]);
 
     return (
-        <div className={'start ' + fade}>
-            {[<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][탭]}
+        <div className={'start ' + fade}>{/*fade in 효과 */}
+            {[<div> {shoes[Number(id)].title} </div>, <div> {shoes[Number(id)].content} </div>, <div> {shoes[Number(id)].price} </div>][탭]}
         </div>
     )
 }
