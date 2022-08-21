@@ -6,8 +6,9 @@ import data from './data.js'
 import { useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 //import { getDefaultNormalizer } from '@testing-library/react';
-import Detail from "./Detail.js";
+import Detail from "./routes/Detail.js";
 import axios from 'axios'
+import Cart from "./routes/Cart.js";
 
 function App() {
 
@@ -57,6 +58,7 @@ function App() {
                 {/* <Route path="/detail/:id/:id2" element={<Detail shoes={shoes} />} /> */}
                 {/* <Route path="/detail/:id/test/:id2" element={<Detail shoes={shoes} />} /> */}
                 <Route path="/detail/:id" element={<Detail shoes={shoes} />} /> {/* :id ==> 파라미터 */}
+                <Route path="/cart" element={<Cart />} />
 
                 {/* <Route path="/about" element={ <AboutPage /> } />
             <Route path="/about/member" element={<AboutPage />} />

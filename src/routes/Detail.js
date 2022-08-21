@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 //import styled from 'styled-components';
 import { Nav, Tab } from "react-bootstrap";
 
-
 // let YellowSimpleBtn = styled.button`
 //     background : grey;
 //     color : yellow
@@ -189,7 +188,7 @@ function TabContent({ shoes, id, 탭 }) {
     return (
         <div className={'start ' + fade}>{/*fade in 효과 */}
             {[<div> {shoes[Number(id)].title} </div>, <div> {shoes[Number(id)].content} </div>, <div> {shoes[Number(id)].price} </div>][탭]}
-        </div>
+        </div> 
     )
 }
 
