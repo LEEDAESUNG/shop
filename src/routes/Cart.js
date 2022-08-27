@@ -1,23 +1,25 @@
 
 import {Table} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeStock, plusCount, minusCount} from './../Store.js';
-import { changeName, increaseAge } from './../store/userStore.js'
+import { changeStock, addCount, minusCount, increaseAge } from './../Store.js';
+
 
 function Cart() {
 
     //redux(createSlice)에서 선언한 변수 사용할 때.
     let state = useSelector((state) => { return state })
-    let user = useSelector((state) => { return state.user })
-    let stock = useSelector((state) => { return state.stock })
-    let cart = useSelector((state) => state.cartdata )
+
+    // let user = useSelector((state) => { return state.user })
+    // let stock = useSelector((state) => { return state.stock })
+    let cart = useSelector((state) => state.cart )
     let dispatch = useDispatch(); //store.js으로 요청을 보내주는 함수
     console.log(state);
 
     return(
         <div>
-            {state.user.name} {state.user.age}의 위시리스트
-            <button onClick={() => { dispatch(increaseAge(10)) }}>버튼</button>
+            {/* {state.user.name} {state.user.age}의 위시리스트
+            <button onClick={() => { dispatch(increaseAge(10)) }}>버튼</button> */}
+            {console.log(state.cart) }
 
             <Table>
                 <thead>
@@ -37,7 +39,7 @@ function Cart() {
                             <td>{cart[i].count}</td>
                             {/* <td><button onClick={() => { dispatch(changeName()) }}>+</button></td> */}
                             {/* <td><button onClick={() => { dispatch(changeStock()) }}>+</button></td> */}
-                            <td><button onClick={() => { dispatch(plusCount()) }}>+</button><button onClick={() => { dispatch(minusCount()) }}>-</button></td>
+                            <td><button onClick={() => { dispatch(addCount(i)) }}>+</button></td>
                             
                         </tr>
                     )

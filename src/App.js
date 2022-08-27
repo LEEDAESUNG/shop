@@ -33,6 +33,7 @@ function App() {
                         {/* <Nav.Link href="/detail">Detail</Nav.Link> */}
                         <Nav.Link onClick={() => { navigate('/detail') }}> Detail </Nav.Link>
                         <Nav.Link href="/about">About</Nav.Link>
+                        <Nav.Link href="/cart">Cart</Nav.Link>
 
                         {/* //페이지 이동 버튼 */}
                         {/* <Link to="/">홈</Link>

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, configureStore } from "@reduxjs/toolkit"
 
 
 let stock = createSlice({
@@ -10,4 +10,11 @@ let stock = createSlice({
         }
     }
 })
-export let { changeStock } = stock.actions
+export let { changeStock } = stock.actions //cartdata의 오브젝트를 왼쪽변수명으로 바꾸는 문법
+
+export default configureStore({
+    reducer: {
+        stock: stock.reducer,
+    }
+})
+
