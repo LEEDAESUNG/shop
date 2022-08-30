@@ -7,25 +7,41 @@ let cart = createSlice({
     name: 'cartdata',
     initialState:
         [
-            { id: 0, name: 'White and Black', count: 2 },
-            { id: 2, name: 'Grey Yordan', count: 1 }
+            // { id: '0', name: 'White and Black', count: 2 },
+            // { id: '2', name: 'Grey Yordan', count: 1 }
         ],
     reducers: {
-        addCount(state) {
-            //return (state[0].count + 1)
-            state[0].count++
+        addItem(state, action) {
+            //state.push(action.payload)
+            let index = state.findIndex((element) => { return element.id === action.payload.id })
+            if (index < 0)
+                state.push(action.payload)
+            else
+                state[index].count++
+        },
+        delItem(state, action) {
+            let index = state.findIndex((element) => { return element.id === action.payload })
+            if(index>=0) 
+                state.pop(index)
         },
         minusCount(state) {
-            //return (state[0].count - 1)
             state[0].count--
+        },
+        addCount(state, action) {
+            let index = state.findIndex((element) => { return element.id === action.payload} )
+            if (index>=0)
+                state[index].count++
+            else
+                console.log(index + ":해당 아이템 없습니다.")
         }
     }
 })
-export let { addCount, minusCount } = cart.actions //cart의 오브젝트를 왼쪽변수명으로 바꾸는 문법
+export let { addCount, minusCount, addItem, delItem } = cart.actions //cart의 오브젝트를 왼쪽변수명으로 바꾸는 문법
 
 
 let user = createSlice({
     name: 'user',
+    //initialState: 'kim',
     initialState: { name: 'kim', age: 30 },
     reducers: {
         changeName(state) {

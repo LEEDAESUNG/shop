@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 //import styled from 'styled-components';
 import { Nav, Tab } from "react-bootstrap";
+//import { addCount } from './../Store.js';
+import { addCount, addItem } from './../Store.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 
 // let YellowSimpleBtn = styled.button`
 //     background : grey;
@@ -23,7 +27,10 @@ import { Nav, Tab } from "react-bootstrap";
 function Detail(props) {
     
     let {id} = useParams();
-
+    let state = useSelector((state) => { return state });
+    let dispatch = useDispatch();
+    let navigate = useNavigate();
+    
     //HTML 랜더링 이후 실행
     //이용시점: 
     //1.시간이 오래걸리는 연산, 2.서버에서 데이터 수신하는 경우,
@@ -130,7 +137,9 @@ function Detail(props) {
                     <h4 className="pt-5">{props.shoes[id].title}</h4>
                     <p>{props.shoes[id].content}</p>
                     <p>{props.shoes[id].price} 원</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    {/* { id: 1, name: 'TestItem', count: 1 }, */}
+                    <button className="btn btn-danger" onClick={() => { dispatch(addItem({ id: id, name: props.shoes[id].title, count: 1 })); navigate('/cart'); }  }>주문하기</button>
+                    {console.log(state.cart) }
                 </div>
             </div>
 

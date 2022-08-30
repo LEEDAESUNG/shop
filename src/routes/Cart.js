@@ -1,7 +1,8 @@
 
 import {Table} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeStock, addCount, minusCount, increaseAge } from './../Store.js';
+//import { changeStock, addCount, minusCount, increaseAge } from './../Store.js';
+import { addCount, delItem } from './../Store.js';
 
 
 function Cart() {
@@ -11,15 +12,15 @@ function Cart() {
 
     // let user = useSelector((state) => { return state.user })
     // let stock = useSelector((state) => { return state.stock })
-    let cart = useSelector((state) => state.cart )
+    //let cart = useSelector((state) => state.cart )
     let dispatch = useDispatch(); //store.js으로 요청을 보내주는 함수
-    console.log(state);
+    //console.log(state);
 
     return(
         <div>
             {/* {state.user.name} {state.user.age}의 위시리스트
             <button onClick={() => { dispatch(increaseAge(10)) }}>버튼</button> */}
-            {console.log(state.cart) }
+            {/* {console.log(state.cart) } */}
 
             <Table>
                 <thead>
@@ -32,14 +33,15 @@ function Cart() {
                 </thead>
                 <tbody>
                 {
-                    cart.map((a,i)=>
+                    state.cart.map((a,i)=>
                         <tr key={i}>
-                            <td>{cart[i].id}</td>
-                            <td>{cart[i].name}</td>
-                            <td>{cart[i].count}</td>
+                            <td>{state.cart[i].id}</td>
+                            <td>{state.cart[i].name}</td>
+                            <td>{state.cart[i].count}</td>
                             {/* <td><button onClick={() => { dispatch(changeName()) }}>+</button></td> */}
                             {/* <td><button onClick={() => { dispatch(changeStock()) }}>+</button></td> */}
-                            <td><button onClick={() => { dispatch(addCount(i)) }}>+</button></td>
+                            <td><button onClick={() => { dispatch(addCount(state.cart[i].id)) }}>+</button> 
+                                <button onClick={() => { dispatch(delItem(state.cart[i].id)) }}>삭제</button></td>
                             
                         </tr>
                     )
