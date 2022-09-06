@@ -3,7 +3,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import './App.css';
 import 메인이미지 from './img/main-bg.jpg';
 import data from './data.js'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 //import { getDefaultNormalizer } from '@testing-library/react';
 import Detail from "./routes/Detail.js";
@@ -12,43 +12,63 @@ import Cart from "./routes/Cart.js";
 
 function App() {
 
+    //로컬스토리지 초기화
+    useEffect(()=>{
+        let 꺼낸거 = localStorage.getItem('watched')
+        if(꺼낸거 == null)
+            localStorage.setItem('watched', JSON.stringify([]))
+    }, [])
     let [shoes, setShoes] = useState(data);
     let navigate = useNavigate();
     let [dataURL, setDataURL] = useState("https://");
     let [moreCount, setMoreCount] = useState(0); //더보기버튼 횟수
     let maxMoreCount = 2;
     let [loading, setLoading] = useState(false);
-
+ 
     return (
         <div className="App">
-            <Navbar bg="dark" variant="dark">
-                <Container>
-                    {/* <Navbar.Brand href="/">ShoeShop</Navbar.Brand> */}
-                    <Navbar.Brand onClick={() => { navigate('/') }}>ShoeShop</Navbar.Brand>
-                    <Nav className="me-auto">
-                        {/* <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link> */}
 
-                        {/* <Nav.Link href="/">Home</Nav.Link> */}
-                        <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-                        {/* <Nav.Link href="/detail">Detail</Nav.Link> */}
-                        <Nav.Link onClick={() => { navigate('/detail') }}> Detail </Nav.Link>
-                        {/* <Nav.Link href="/about">About</Nav.Link> */}
-                        <Nav.Link onClick={() => { navigate('/abount') }} >About</Nav.Link>
-                        {/* <Nav.Link href="/cart">Cart</Nav.Link> */}
-                        <Nav.Link onClick={() => { navigate('/cart') }}></Nav.Link>}
+            <div>
+                <Navbar bg="dark" variant="dark">
+                    <Container>
+                        {/* <Navbar.Brand href="/">ShoeShop</Navbar.Brand> */}
+                        <Navbar.Brand onClick={() => { navigate('/') }}>ShoeShop</Navbar.Brand>
+                        <Nav className="me-auto">
+                            {/* <Nav.Link href="#home">Home</Nav.Link>
+                <Nav.Link href="#features">Features</Nav.Link>
+                <Nav.Link href="#pricing">Pricing</Nav.Link> */}
 
-                        {/* //페이지 이동 버튼 */}
-                        {/* <Link to="/">홈</Link>
-            <Link to="/detail">상세페이지</Link>
-            <Link to="/about">어바웃페이지</Link>  */}
-                    </Nav>
-                </Container>
-            </Navbar>
+                            {/* <Nav.Link href="/">Home</Nav.Link> */}
+                            <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
+                            {/* <Nav.Link href="/detail">Detail</Nav.Link> */}
+                            <Nav.Link onClick={() => { navigate('/detail') }}> Detail </Nav.Link>
+                            {/* <Nav.Link href="/about">About</Nav.Link> */}
+                            <Nav.Link onClick={() => { navigate('/abount') }} >About</Nav.Link>
+                            {/* <Nav.Link href="/cart">Cart</Nav.Link> */}
+                            <Nav.Link onClick={() => { navigate('/cart') }}></Nav.Link>}
+
+                            {/* //페이지 이동 버튼 */}
+                            {/* <Link to="/">홈</Link>
+                <Link to="/detail">상세페이지</Link>
+                <Link to="/about">어바웃페이지</Link>  */}
+                        </Nav>
+                    </Container>
+                </Navbar>
+            </div>
 
 
             <div className="main-bg" style={{ backgroundImage: 'URL(' + 메인이미지 + ')' }} /> {/*src/img 이미지파일*/}
+
+            <div className="side_recent_view">
+                <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+                <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+                <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+                <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+                <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+            </div>
+            
+
+
             <button onClick={() => {
                 let copy = [...shoes];
                 const comparator = (a, b) => a.title.localeCompare(b.title);
@@ -182,30 +202,18 @@ function App() {
 
 function Home(props) {
 
-
     {/* <TitleSort /> */}
-    <div> 테스트 </div>
 
     return (
-        
-        
         props.shoes.map(function (a, i) {
             return (
                 <>
                     <div className="col-md-4" key={i}>
-                        <Card shoes={props.shoes[i]} />
+                        <Card shoes={props.shoes[i]} id={i} />
                     </div>
                 </>
             )
         })
-    );
-}
-function TitleSort()
-{
-    return (
-        <div>
-            <button> 상품명 정렬</button>
-        </div>
     );
 }
 function Card(props) {
@@ -220,7 +228,13 @@ function Card(props) {
         </>
     );
 }
-
+function TitleSort() {
+    return (
+        <div>
+            <button> 상품명 정렬</button>
+        </div>
+    );
+}
 
 
 function AboutPage() {

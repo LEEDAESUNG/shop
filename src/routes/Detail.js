@@ -27,6 +27,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 function Detail(props) {
     
     let {id} = useParams();
+    let 찾은상품 = props.shoes.find(x=>x.id ==id);
     let state = useSelector((state) => { return state });
     let dispatch = useDispatch();
     let navigate = useNavigate();
@@ -86,18 +87,25 @@ function Detail(props) {
     let [money, setMoney] = useState("");
     let [탭, 탭변경] = useState(0);
 
-    // const onChangeMoney = (e) => {
-    //     let num = e.target.value.replace(/[^0-9]/g, "")
-    //     setMoney(num);
-    // };
-
-    function onChangeMoney(e){
+    const onChangeMoney = (e) => {
+    //function onChangeMoney(e){
         let num = e.target.value.replace(/[^0-9]/g, "") //숫자만
         setMoney(num);
         if (e.target.value.length != num.length) {
             setMessage("숫자만 입력하세요")
         }
     }
+
+    //로컬스토리지
+    useEffect(()=>{
+        let 꺼낸거 = localStorage.getItem('watched')             // 꺼낸거=[0,1,2]        // JSON타입의 텍스트를 가져오기
+        꺼낸거 = JSON.parse(꺼낸거)                              // 꺼낸거=0,1,2          // object타입으로 변환
+        꺼낸거.push(찾은상품.id)                                 // 꺼낸거=0,1,2,0        // Array자료에 추가
+        꺼낸거 = new Set(꺼낸거)                                 // 꺼낸거=[object set]   // 중복데이터 제거
+        꺼낸거 = Array.from(꺼낸거)                              // 꺼낸거=0,1,2          // Array자료형태로 변경
+        localStorage.setItem('watched', JSON.stringify(꺼낸거)) // 꺼낸거=[0,1,2]        // JSON타입의 텍스트로 저장
+    }, []);
+
     return (
         <div className="container">
 

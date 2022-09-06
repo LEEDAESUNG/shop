@@ -42,12 +42,10 @@ function Cart() {
                             {/* <td><button onClick={() => { dispatch(changeStock()) }}>+</button></td> */}
                             <td><button onClick={() => { dispatch(addCount(state.cart[i].id)) }}>+</button> 
                                 <button onClick={() => { dispatch(delItem(state.cart[i].id)) }}>삭제</button></td>
-                            
                         </tr>
                     )
-                    
                 }
-                    
+
                 </tbody>
             </Table>
         </div> 

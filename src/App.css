@@ -1,3 +1,17 @@
+.side_recent_view {
+  position: absolute;
+  width: 300;
+  height: 1000;
+  top: 0;
+  right: 0px;
+  z-index: 10030;
+  width: 82px;
+  height: 387px;
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 .start{
   opacity: 0;
 }
